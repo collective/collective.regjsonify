@@ -1,0 +1,31 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    i18n_domain="collective.regjsonify">
+
+  <five:registerPackage package="." initialize=".initialize" />
+  <include package="plone.registry" />
+
+  <adapter
+    factory=".jsonify.JSONifier"
+    provides=".interfaces.IJSONifier"
+    for="plone.registry.interfaces.IRecordsProxy"
+    />
+
+  <adapter
+    factory=".fields.Sequence"
+    provides=".interfaces.IJSONFieldDumper"
+    for="zope.schema.interfaces.ISequence"
+    />
+  <adapter
+    factory=".fields.Base"
+    provides=".interfaces.IJSONFieldDumper"
+    for="zope.schema.interfaces.IText"
+    />
+  <adapter
+    factory=".fields.Base"
+    provides=".interfaces.IJSONFieldDumper"
+    for="zope.schema.interfaces.IBool"
+    />
+
+</configure>
