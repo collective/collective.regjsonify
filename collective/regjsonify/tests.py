@@ -32,21 +32,21 @@ class TestPersistentObject(PersistentField, schema.Object):
     interface.implements(ITestPersistentObject)
 
 
-class IUnknow(interface.Interface):
+class IUnknown(interface.Interface):
     data_1 = schema.TextLine(title=u"Some text", default=u"Foo bar")
     data_2 = schema.TextLine(title=u"Other text", default=u"Baz qux")
 
-class Unknow(object):
-    interface.implements(IUnknow)
+class Unknown(object):
+    interface.implements(IUnknown)
     
     def __init__(self):
         self.data_1 = u'a'
         self.data_2 = u'b'
 
-registerFactoryAdapter(IUnknow, Unknow)
+registerFactoryAdapter(IUnknown, Unknown)
 
 
-class UnknowField(JSONifyBase):
+class UnknownField(JSONifyBase):
     
     def data(self, record):
         return {'data_1': record.data_1,
@@ -75,10 +75,10 @@ class ITest(interface.Interface):
                                    default=(1, 3),
                                    value_type=schema.Choice(values=(1, 2, 3, 4))
                                    )
-    unknow_type = schema.Tuple(title=u"A set of unknow",
-                               value_type=TestPersistentObject(IUnknow,
+    unknown_type = schema.Tuple(title=u"A set of unknown",
+                               value_type=TestPersistentObject(IUnknown,
                                                                title=u"A persistent something"),
-                               default=(Unknow(), ),
+                               default=(Unknown(), ),
                                missing_value=())
 
 
@@ -89,7 +89,7 @@ class RegJSONifyTestCase(unittest.TestCase):
     def setUp(self):
         super(RegJSONifyTestCase, self).setUp()
         gsm = getGlobalSiteManager()
-        gsm.registerAdapter(UnknowField, (ITestPersistentObject,), provided=IJSONFieldDumper)
+        gsm.registerAdapter(UnknownField, (ITestPersistentObject,), provided=IJSONFieldDumper)
         self.registry = Registry()
         self.registry.registerInterface(ITest)
         self.proxy = self.registry.forInterface(ITest)
@@ -144,8 +144,8 @@ class RegJSONifyTestCase(unittest.TestCase):
        self.assertTrue('multiple_choice' in data.json().keys())
        self.assertEqual(data.json()['multiple_choice'], [1, 3])
 
-    def test_unknow_type(self):
+    def test_unknown_type(self):
        data = IJSONifier(self.proxy)
-       self.assertTrue('unknow_type' in data.json().keys())
-       self.assertEqual(data.json()['unknow_type'][0].get('data_1'), u'a')
-       self.assertEqual(data.json()['unknow_type'][0].get('data_2'), u'b')
+       self.assertTrue('unknown_type' in data.json().keys())
+       self.assertEqual(data.json()['unknown_type'][0].get('data_1'), u'a')
+       self.assertEqual(data.json()['unknown_type'][0].get('data_2'), u'b')

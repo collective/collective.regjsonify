@@ -3,11 +3,11 @@ import os
 
 version = '0.1.0'
 
-tests_require = ['plone.app.testing', ]
+tests_require = ['plone.app.testing', 'z3c.form']
 
 setup(name='collective.regjsonify',
       version=version,
-      description="Dump Plone registry content to a JSON format",
+      description="Export Plone registry content to a JSON compatible Python structure",
       long_description=open("README.rst").read() + "\n" +
                        open(os.path.join("docs", "HISTORY.rst")).read(),
       # Get more strings from

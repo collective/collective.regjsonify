@@ -20,9 +20,9 @@ Extending
 =========
 
 The package came with a default set of know data types that cover common fields used in Plone registry.
-However this set can be not complete if you are saving in the registry an unknow custom type.
+However this set can be not complete if you are saving in the registry an unknown custom type.
 
-During export operation unknow types are ignored.
+During export operation unknown data are ignored.
 
 If you want to export other types you must manually provide the proper ``IJSONFieldDumper`` adapter:
 
