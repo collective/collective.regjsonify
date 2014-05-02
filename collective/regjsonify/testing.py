@@ -25,10 +25,6 @@ class RegJSONifyLayer(PloneSandboxLayer):
         z2.installProduct(app, 'collective.regjsonify')
 
 
-    def setUpPloneSite(self, portal):
-        setRoles(portal, TEST_USER_ID, ['Member', 'Manager'])
-
-
 REG_JSONIFY_FIXTURE = RegJSONifyLayer()
 REG_JSONIFY_INTEGRATION_TESTING = \
     IntegrationTesting(bases=(REG_JSONIFY_FIXTURE, ),

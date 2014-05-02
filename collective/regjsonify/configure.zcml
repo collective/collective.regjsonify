@@ -20,12 +20,28 @@
   <adapter
     factory=".fields.Base"
     provides=".interfaces.IJSONFieldDumper"
+    for="zope.schema.interfaces.IChoice"
+    />
+
+  <adapter
+    factory=".fields.Base"
+    provides=".interfaces.IJSONFieldDumper"
     for="zope.schema.interfaces.IText"
     />
   <adapter
     factory=".fields.Base"
     provides=".interfaces.IJSONFieldDumper"
+    for="zope.schema.interfaces.INativeString"
+    />
+  <adapter
+    factory=".fields.Base"
+    provides=".interfaces.IJSONFieldDumper"
     for="zope.schema.interfaces.IBool"
+    />
+  <adapter
+    factory=".fields.Base"
+    provides=".interfaces.IJSONFieldDumper"
+    for="zope.schema.interfaces.IMinMax"
     />
 
 </configure>
