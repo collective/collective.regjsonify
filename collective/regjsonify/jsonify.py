@@ -16,10 +16,18 @@ class JSONifier(object):
     def __init__(self, settings):
         self.settings = settings
 
+    def _iterateAttributes(self, schema):
+        data = []
+        for attr in schema.namesAndDescriptions():
+            data.append(attr)
+        for parent in schema.getBases():
+            data.extend(self._iterateAttributes(parent))
+        return data
+
     def json(self):
         result = {}
         settings = self.settings
-        registry_data = settings.__schema__.namesAndDescriptions()
+        registry_data = self._iterateAttributes(settings.__schema__)
         for name, data in registry_data:
             try:
                 field_data = IJSONFieldDumper(data)

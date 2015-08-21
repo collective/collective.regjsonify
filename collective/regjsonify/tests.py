@@ -25,37 +25,37 @@ test_vocab = SimpleVocabulary((
    SimpleTerm(value=2, token='raining', title=u'Raining')))
 
 
-class ITestPersistentObject(interface.Interface):
-    pass
-
 class TestPersistentObject(PersistentField, schema.Object):
-    interface.implements(ITestPersistentObject)
+    pass
 
 
 class IUnknown(interface.Interface):
     data_1 = schema.TextLine(title=u"Some text", default=u"Foo bar")
     data_2 = schema.TextLine(title=u"Other text", default=u"Baz qux")
 
+
 class Unknown(object):
     interface.implements(IUnknown)
     
-    def __init__(self):
+    def __init__(self, data="", data2=""):
         self.data_1 = u'a'
         self.data_2 = u'b'
 
 registerFactoryAdapter(IUnknown, Unknown)
 
 
-class UnknownField(JSONifyBase):
-    
-    def data(self, record):
-        return {'data_1': record.data_1,
-                'data_2': record.data_2}
+#class UnknownFieldJSONAdapter(JSONifyBase):
+#    
+#    def data(self, record):
+#        return {'data_1': record.data_1,
+#                'data_2': record.data_2}
 
-
-class ITest(interface.Interface):
-    
+class ITestBase(interface.Interface):
     simple_text = schema.TextLine(title=u"Simple Text", default=u"Lorem Ipsum")
+
+
+class ITest(ITestBase):
+    
     long_text = schema.Text(title=u"Long Text", default=u"Lorem Ipsum")
     ascii = schema.ASCIILine(title=u"ASCII", default="1234-abc")
     number1 = schema.Int(title=u"An int", default=24)
@@ -89,7 +89,7 @@ class RegJSONifyTestCase(unittest.TestCase):
     def setUp(self):
         super(RegJSONifyTestCase, self).setUp()
         gsm = getGlobalSiteManager()
-        gsm.registerAdapter(UnknownField, (ITestPersistentObject,), provided=IJSONFieldDumper)
+        #gsm.registerAdapter(UnknownFieldJSONAdapter, (IUnknown,), provided=IJSONFieldDumper)
         self.registry = Registry()
         self.registry.registerInterface(ITest)
         self.proxy = self.registry.forInterface(ITest)

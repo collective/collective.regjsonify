@@ -44,4 +44,10 @@
     for="zope.schema.interfaces.IMinMax"
     />
 
+  <adapter
+    factory=".fields.Object"
+    provides=".interfaces.IJSONFieldDumper"
+    for="zope.schema.interfaces.IObject"
+    />
+
 </configure>

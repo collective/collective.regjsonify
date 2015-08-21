@@ -40,3 +40,17 @@ class Sequence(Base):
                 continue
         return result
 
+
+class Object(Base):
+    """
+    The schema.object implementation: try to extract JSON from the inner schema
+    """
+    implements(IJSONFieldDumper)
+
+    def data(self, record):
+        field = self.field
+        result = {}
+        for name, subfield in field.schema.namesAndDescriptions():
+            subfield_data = IJSONFieldDumper(subfield)
+            result[name] = subfield_data.data(getattr(record, name))
+        return result

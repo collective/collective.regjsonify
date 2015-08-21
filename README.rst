@@ -20,7 +20,7 @@ Extending
 =========
 
 The package came with a default set of know data types that cover common fields used in Plone registry.
-However this set can be not complete if you are saving in the registry an unknown custom type.
+However this set can be not complete if you are using a not supported field type.
 
 During export operation unknown data are ignored.
 
@@ -31,5 +31,5 @@ If you want to export other types you must manually provide the proper ``IJSONFi
     <adapter
       factory="your.package.YouExportAdapter"
       provides="collective.regjsonify.interfaces.IJSONFieldDumper"
-      for="your.package.interfaces.IYourFieldType"
+      for="3rd.party.field.interfaces.INewFieldType"
       />
