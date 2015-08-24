@@ -2,20 +2,14 @@
 
 import unittest
 from collective.regjsonify.interfaces import IJSONifier
-from collective.regjsonify.interfaces import IJSONFieldDumper
-from collective.regjsonify.fields import Base as JSONifyBase
+#from collective.regjsonify.interfaces import IJSONFieldDumper
+#from collective.regjsonify.fields import Base as JSONifyBase
 from collective.regjsonify.testing import REG_JSONIFY_INTEGRATION_TESTING
-from plone.registry.interfaces import IRegistry
 from plone.registry import Registry
 from plone.registry.field import PersistentField
-from plone.registry.fieldfactory import persistentFieldAdapter
-from plone.registry.fieldfactory import choicePersistentFieldAdapter
 from z3c.form.object import registerFactoryAdapter
 from zope import interface
 from zope import schema
-from zope.component import queryUtility
-from zope.component import getGlobalSiteManager
-from zope.component import testing
 from zope.schema.vocabulary import SimpleTerm
 from zope.schema.vocabulary import SimpleVocabulary
 
@@ -32,14 +26,16 @@ class TestPersistentObject(PersistentField, schema.Object):
 class IUnknown(interface.Interface):
     data_1 = schema.TextLine(title=u"Some text", default=u"Foo bar")
     data_2 = schema.TextLine(title=u"Other text", default=u"Baz qux")
+    data_3 = schema.Tuple(title=u"Subtuple")
 
 
 class Unknown(object):
     interface.implements(IUnknown)
     
-    def __init__(self, data="", data2=""):
+    def __init__(self, data_1="", data_2="", data_3=[]):
         self.data_1 = u'a'
         self.data_2 = u'b'
+        self.data_3 = ('a', 'b')
 
 registerFactoryAdapter(IUnknown, Unknown)
 
@@ -66,7 +62,10 @@ class ITest(ITestBase):
                           default=['aaa', 'bbb'])
     tuple_of = schema.Tuple(title=u"A tuple",
                             value_type=schema.TextLine(),
-                            default=('aaa', 'bbb'))
+                            default=(u'aaa', u'bbb'))
+    tuple_of_2 = schema.Tuple(title=u"A tuple",
+                              value_type=schema.ASCIILine(),
+                              default=('ccc', 'ddd'))
     choose = schema.Choice(title=u"Choose",
                            values=[1,2,3],
                            default=1,
@@ -88,7 +87,7 @@ class RegJSONifyTestCase(unittest.TestCase):
     
     def setUp(self):
         super(RegJSONifyTestCase, self).setUp()
-        gsm = getGlobalSiteManager()
+        #gsm = getGlobalSiteManager()
         #gsm.registerAdapter(UnknownFieldJSONAdapter, (IUnknown,), provided=IJSONFieldDumper)
         self.registry = Registry()
         self.registry.registerInterface(ITest)
@@ -127,7 +126,9 @@ class RegJSONifyTestCase(unittest.TestCase):
     def test_tuple(self):
        data = IJSONifier(self.proxy)
        self.assertTrue('tuple_of' in data.json().keys())
-       self.assertEqual(data.json()['tuple_of'], ['aaa', 'bbb'])
+       self.assertEqual(data.json()['tuple_of'], [u'aaa', u'bbb'])
+       self.assertTrue('tuple_of_2' in data.json().keys())
+       self.assertEqual(data.json()['tuple_of_2'], ['ccc', 'ddd'])
 
     def test_list(self):
        data = IJSONifier(self.proxy)

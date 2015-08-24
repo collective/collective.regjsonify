@@ -3,13 +3,12 @@
 from .interfaces import IJSONifier
 from .interfaces import IJSONFieldDumper
 from zope.interface import implements
-from zope.component.interfaces import ComponentLookupError
 
 
 class JSONifier(object):
     """
     Default IJSONifier implementation.
-    Iterate registry data and dump every field looking at it's type
+    Iterate registry data and dump every field looking at its type
     """
     implements(IJSONifier)
 

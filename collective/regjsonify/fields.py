@@ -31,19 +31,23 @@ class Sequence(Base):
     def data(self, record):
         result = []
         field = self.field
-        name = field.__name__
-        for x in getattr(record, name):
+        if IRecordsProxy.providedBy(record):
+            name = field.__name__
+            sequence = getattr(record, name)
+        else:
+            sequence = record
+        for x in sequence:
             try:
                 subfield_data = IJSONFieldDumper(field.value_type)
-                result.append(subfield_data.data(x))
             except TypeError:
                 continue
+            result.append(subfield_data.data(x))
         return result
 
 
 class Object(Base):
     """
-    The schema.object implementation: try to extract JSON from the inner schema
+    The IObject implementation: try to extract JSON from the inner schema
     """
     implements(IJSONFieldDumper)
 
@@ -51,6 +55,9 @@ class Object(Base):
         field = self.field
         result = {}
         for name, subfield in field.schema.namesAndDescriptions():
-            subfield_data = IJSONFieldDumper(subfield)
+            try:
+                subfield_data = IJSONFieldDumper(subfield)
+            except TypeError:
+                continue
             result[name] = subfield_data.data(getattr(record, name))
         return result
