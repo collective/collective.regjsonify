@@ -14,7 +14,8 @@ setup(name='collective.regjsonify',
       # http://pypi.python.org/pypi?:action=list_classifiers
       classifiers=[
         "Framework :: Plone",
-        "Framework :: Zope3",
+        "Framework :: Plone :: 4.2",
+        "Framework :: Plone :: 4.3",
         "Intended Audience :: Developers",
         "Programming Language :: Python",
         "License :: OSI Approved :: GNU General Public License (GPL)",
