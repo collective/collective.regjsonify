@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.2.0 (unreleased)
+0.2.0 (2015-08-25)
 ------------------
 
 - Recusively traverse all of the interface's parents attributes
