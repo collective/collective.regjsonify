@@ -28,11 +28,13 @@
     provides=".interfaces.IJSONFieldDumper"
     for="zope.schema.interfaces.IText"
     />
+
   <adapter
     factory=".fields.Base"
     provides=".interfaces.IJSONFieldDumper"
-    for="zope.schema.interfaces.INativeString"
+    for="zope.schema.interfaces.IBytes
     />
+
   <adapter
     factory=".fields.Base"
     provides=".interfaces.IJSONFieldDumper"

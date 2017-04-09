@@ -4,7 +4,8 @@ Changelog
 0.2.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix compatibility with zope.schema < 4
+  [mamico]
 
 
 0.2.0 (2015-08-25)
