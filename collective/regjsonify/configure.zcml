@@ -32,7 +32,7 @@
   <adapter
     factory=".fields.Base"
     provides=".interfaces.IJSONFieldDumper"
-    for="zope.schema.interfaces.IBytes
+    for="zope.schema.interfaces.IBytes"
     />
 
   <adapter
