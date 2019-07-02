@@ -2,15 +2,15 @@
 
 from .interfaces import IJSONifier
 from .interfaces import IJSONFieldDumper
-from zope.interface import implements
+from zope.interface import implementer
 
 
+@implementer(IJSONifier)
 class JSONifier(object):
     """
     Default IJSONifier implementation.
     Iterate registry data and dump every field looking at its type
     """
-    implements(IJSONifier)
 
     def __init__(self, settings):
         self.settings = settings

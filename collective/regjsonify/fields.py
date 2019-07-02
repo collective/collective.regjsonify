@@ -2,16 +2,16 @@
 
 from .interfaces import IJSONFieldDumper
 from plone.registry.interfaces import IRecordsProxy
-from zope.interface import implements
+from zope.interface import implementer
 
 
+@implementer(IJSONFieldDumper)
 class Base(object):
     """
     The basic implementation.
     Can be used when the data is JSON compatible
     """
-    implements(IJSONFieldDumper)
-    
+
     def __init__(self, field):
         self.field = field
 
@@ -21,13 +21,13 @@ class Base(object):
         return record
 
 
+@implementer(IJSONFieldDumper)
 class Sequence(Base):
     """
     ISequence implementation (common for IList and ITuple).
     Iterate on elements and recursively call IJSONFieldDumper on subdata
     """
-    implements(IJSONFieldDumper)
-    
+
     def data(self, record):
         result = []
         field = self.field
@@ -45,11 +45,11 @@ class Sequence(Base):
         return result
 
 
+@implementer(IJSONFieldDumper)
 class Object(Base):
     """
     The IObject implementation: try to extract JSON from the inner schema
     """
-    implements(IJSONFieldDumper)
 
     def data(self, record):
         field = self.field
