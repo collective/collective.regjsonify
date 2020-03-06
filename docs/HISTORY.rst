@@ -1,11 +1,14 @@
 Changelog
 =========
 
-0.2.1 (unreleased)
+
+0.3.0 (unreleased)
 ------------------
 
 - Fix compatibility with zope.schema < 4
   [mamico]
+- Python 3 compatibility
+  [cekk]
 
 
 0.2.0 (2015-08-25)
