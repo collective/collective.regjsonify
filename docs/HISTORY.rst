@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-0.3.0 (unreleased)
+0.3.0 (2020-03-13)
 ------------------
 
 - Fix compatibility with zope.schema < 4
